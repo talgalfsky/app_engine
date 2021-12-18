@@ -5,3 +5,6 @@ handlers:
   script: auto
 - url: /.*
   script: auto
+
+manual_scaling:
+  instances: 2
