@@ -6,7 +6,7 @@ from flask_restful import Resource, Api
 # client = bigquery.Client()
 
 app = Flask(__name__)
-# api = Api(app)
+api = Api(app)
 
 @app.route("/")
 def homepage():
