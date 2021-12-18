@@ -1,9 +1,9 @@
 from flask import Flask, render_template
 # from flask_restful import Resource, Api
 # from googleapiclient import discovery
-from google.cloud import bigquery
+# from google.cloud import bigquery
 # from oauth2client.client import GoogleCredentials
-client = bigquery.Client()
+# client = bigquery.Client()
 
 app = Flask(__name__)
 # api = Api(app)
