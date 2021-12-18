@@ -1,1 +1,7 @@
 runtime: python37
+
+handlers:
+- url: /
+  script: auto
+- url: /.*
+  script: auto
