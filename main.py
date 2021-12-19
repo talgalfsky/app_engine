@@ -6,7 +6,7 @@ from flask_restful import Resource, Api
 # client = bigquery.Client()
 
 app = Flask(__name__)
-# api = Api(app)
+api = Api(app)
 
 @app.route("/")
 def homepage():
@@ -35,11 +35,11 @@ def about():
 #             results[row.name] = row.name
 #         return({'res': results},200)
 
-# class PrintNames(Resource):
-#     def get(self):
-#         return({'res': 'snoi'},200)
+class PrintNames(Resource):
+    def get(self):
+        return({'res': 'snoi'},200)
 
-# api.add_resource(PrintNames, '/printnames')  # and '/printnames' is our entry point for printnames
+api.add_resource(PrintNames, '/printnames')  # and '/printnames' is our entry point for printnames
 
 if __name__ == "__main__":
     app.run(debug=True)
