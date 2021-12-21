@@ -105,11 +105,53 @@ class CreateBaby(Resource):
         else:
             return ({'error':f"{errors}"},400)
 
+class GetRecommendations(Resource):
+    def get(self):
+        client = bigquery.Client()
+        parser = reqparse.RequestParser()
+        parser.add_argument('user_id', required=True, help="user_id cannot be blank!")
+        parser.add_argument('baby_id', required=True, help="baby_id cannot be blank!")
+        args = parser.parse_args()
+        user_id = args['user_id']
+        baby_id = args['baby_id']
+        
+        query = f"""
+            WITH past_decisions AS(
+            SELECT 
+              name,
+              baby_sex
+            FROM
+            `sbx-nameswipe-1.main.decisions` AS decisions
+            JOIN
+            `sbx-nameswipe-1.main.babies` AS babies
+            USING (baby_id)
+            WHERE decisions.user_id = {user_id} AND baby_id = {baby_id}
+            )
+
+            SELECT name
+            FROM `sbx-nameswipe-1.tal_dev.baby_features`
+            WHERE name_lower NOT IN (SELECT name FROM past_decisions)
+            AND sex = (select distinct baby_sex FROM past_decisions)
+            ORDER BY RAND()
+            LIMIT 10                
+        """
+        
+        parser.remove_argument('user_id')
+        parser.remove_argument('baby_id')
+        
+        results = {} #empty dic
+        counter = 0
+        for row in query_res:
+            counter += 1
+            results[f"name_{counter}"] = row.name
+        return({'res': results},200)
+        
 # api.add_resource(Users, '/users')  # '/users' is our entry point for Users
 # api.add_resource(Locations, '/locations')  # and '/locations' is our entry point for Locations
 api.add_resource(PrintNames, '/printnames')  # and '/printnames' is our entry point to print names
 api.add_resource(CreateUser, '/createuser')  # '/createuser' is our entry point to create user
 api.add_resource(CreateBaby, '/createbaby')  # '/createbaby' is our entry point to create baby
+api.add_resource(GetRecommendations, '/getrecommendations')  # '/getrecommendations' is our entry point to get 10 random recs
 
 if __name__ == "__main__":
     app.run(debug=True)
