@@ -22,6 +22,7 @@ def about():
 
 class PrintNames(Resource):
     def get(self):
+        client = bigquery.Client()
         query = """
         SELECT * 
         FROM `sbx-nameswipe-1.tal_dev.baby_features` 
