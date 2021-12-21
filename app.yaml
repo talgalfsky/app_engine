@@ -7,4 +7,4 @@ handlers:
   script: auto
 
 manual_scaling:
-  instances: 2
+  instances: 1
