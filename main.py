@@ -8,8 +8,6 @@ client = bigquery.Client()
 app = Flask(__name__)
 api = Api(app)
 
-parser = reqparse.RequestParser()
-
 @app.route("/")
 def homepage():
     return render_template("index.html", title="HOME PAGE")
@@ -24,6 +22,7 @@ def about():
 
 class PrintNames(Resource):
     def get(self):
+        parser = reqparse.RequestParser()
         client = bigquery.Client()
         query = """
         SELECT * 
