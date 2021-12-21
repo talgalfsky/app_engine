@@ -151,7 +151,7 @@ class GetRecommendations(Resource):
 api.add_resource(PrintNames, '/printnames')  # and '/printnames' is our entry point to print names
 api.add_resource(CreateUser, '/createuser')  # '/createuser' is our entry point to create user
 api.add_resource(CreateBaby, '/createbaby')  # '/createbaby' is our entry point to create baby
-# api.add_resource(GetRecommendations, '/getrecommendations')  # '/getrecommendations' is our entry point to get 10 random recs
+api.add_resource(GetRecommendations, '/getrecommendations')  # '/getrecommendations' is our entry point to get 10 random recs
 
 if __name__ == "__main__":
     app.run(debug=True)
