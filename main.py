@@ -102,8 +102,8 @@ class PrintNames(Resource):
 #         else:
 #             return ({'error':f"{errors}"},400)
 
-api.add_resource(Users, '/users')  # '/users' is our entry point for Users
-api.add_resource(Locations, '/locations')  # and '/locations' is our entry point for Locations
+# api.add_resource(Users, '/users')  # '/users' is our entry point for Users
+# api.add_resource(Locations, '/locations')  # and '/locations' is our entry point for Locations
 api.add_resource(PrintNames, '/printnames')  # and '/printnames' is our entry point to print names
 # api.add_resource(CreateUser, '/createuser')  # '/createuser' is our entry point to create user
 # api.add_resource(CreateBaby, '/createbaby')  # '/createbaby' is our entry point to create baby
