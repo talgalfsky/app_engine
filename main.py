@@ -136,7 +136,7 @@ class GetRecommendations(Resource):
             LIMIT 10                
         """
         
-        query_res = client.query(query)
+#         query_res = client.query(query)
         
         parser.remove_argument('user_id')
         parser.remove_argument('baby_id')
