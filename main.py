@@ -87,23 +87,27 @@ class CreateBaby(Resource):
             print(row)
 
         baby_id = int(row.max_id)+1
-        print(baby_id)
 
         row_to_insert = [
             {u"user_id": user_id, u"baby_id": baby_id, u"baby_sex": baby_sex},
         ]
 
         table_id = "sbx-nameswipe-1.main.babies"
-
-        errors = client.insert_rows_json(table_id, row_to_insert)
+        errors_babies = client.insert_rows_json(table_id, row_to_insert)
+        
+        table_id = "sbx-nameswipe-1.main.decisions"
+        row_to_insert = [
+            {u"baby_id": baby_id, u"user_id": user_id, u"name": ""},
+        ]
+        errors_decisions = client.insert_rows_json(table_id, row_to_insert)
         
         parser.remove_argument('user_id')
         parser.remove_argument('baby_sex')
         
-        if errors == []:
+        if errors_babies == [] and errors_decisions == []:
             return ({'baby_id':baby_id},200)
         else:
-            return ({'error':f"{errors}"},400)
+            return ({'error':f"error_babies {errors_babies}, error_decisions {errors_decisions}"},400)
 
 class GetRecommendations(Resource):
     def get(self):
