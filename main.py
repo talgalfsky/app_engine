@@ -170,8 +170,9 @@ class GetRecommendations(Resource):
             FROM `sbx-nameswipe-1.tal_dev.baby_features`
             WHERE name_lower NOT IN (SELECT name FROM past_decisions)
             AND sex = (select distinct baby_sex FROM past_decisions)
+            AND rank_bracket > 0.8
             ORDER BY RAND()
-            LIMIT 10                
+            LIMIT 50                
         """
         
         query_res = client.query(query)
