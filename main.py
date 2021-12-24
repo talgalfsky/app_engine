@@ -109,40 +109,40 @@ class CreateBaby(Resource):
         else:
             return ({'error':f"error_babies {errors_babies}, error_decisions {errors_decisions}"},400)
 
-class SetDecisions(Resource):
-    def get(self):
-        client = bigquery.Client()
-        parser = reqparse.RequestParser()
-        parser.add_argument('baby_id', required=True, help="baby_id cannot be blank!")
-        parser.add_argument('user_id', required=True, help="user_id cannot be blank!")
-        parser.add_argument('names', required=True, help="names needs to be an array seperate by commas")
-        parser.add_argument('scores', required=True, help="scores needs to be a numeric array seperate by commas")
-        args = parser.parse_args()
-        baby_id = args['baby_id']
-        user_id = args['user_id']
-        names = args['names']
-        scores = args['scores']
+# class SetDecisions(Resource):
+#     def get(self):
+#         client = bigquery.Client()
+#         parser = reqparse.RequestParser()
+#         parser.add_argument('baby_id', required=True, help="baby_id cannot be blank!")
+#         parser.add_argument('user_id', required=True, help="user_id cannot be blank!")
+#         parser.add_argument('names', required=True, help="names needs to be an array seperate by commas")
+#         parser.add_argument('scores', required=True, help="scores needs to be a numeric array seperate by commas")
+#         args = parser.parse_args()
+#         baby_id = args['baby_id']
+#         user_id = args['user_id']
+#         names = args['names']
+#         scores = args['scores']
         
-        return_names = names.replace(" ","").split(',')
-        return_scores = scores.replace(" ","").split(',')
+#         return_names = names.replace(" ","").split(',')
+#         return_scores = scores.replace(" ","").split(',')
 
-        rows_to_insert = []
-        for ind,score in enumerate(return_scores):
-            row_to_insert = {u"baby_id": baby_id, u"user_id": user_id, u"name": return_names[ind].lower(), u"score" :float(score)}
-            rows_to_insert.append(row_to_insert)
+#         rows_to_insert = []
+#         for ind,score in enumerate(return_scores):
+#             row_to_insert = {u"baby_id": baby_id, u"user_id": user_id, u"name": return_names[ind].lower(), u"score" :float(score)}
+#             rows_to_insert.append(row_to_insert)
 
-        table_id = "sbx-nameswipe-1.main.decisions"
+#         table_id = "sbx-nameswipe-1.main.decisions"
 
-        errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
-        if errors == []:
-            return ({'status':"success"},200)
-        else:
-            return ({'error':f"{errors}"},400)
+#         errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
+#         if errors == []:
+#             return ({'status':"success"},200)
+#         else:
+#             return ({'error':f"{errors}"},400)
         
-        parser.remove_argument('user_id')
-        parser.remove_argument('baby_id')
-        parser.remove_argument('names')
-        parser.remove_argument('scores')
+#         parser.remove_argument('user_id')
+#         parser.remove_argument('baby_id')
+#         parser.remove_argument('names')
+#         parser.remove_argument('scores')
 
 
         
@@ -237,7 +237,7 @@ api.add_resource(CreateUser, '/createuser')  # '/createuser' is our entry point 
 api.add_resource(CreateBaby, '/createbaby')  # '/createbaby' is our entry point to create baby
 api.add_resource(GetRecommendations, '/getrecommendations')  # '/getrecommendations' is our entry point to get 10 random recs
 api.add_resource(GetTable, '/gettable')  # '/gettable will give you the first 100 rows of any table
-api.add_resource(SetDecisions, '/setdecisions')  # '/setdecisions is used to update user scores per name list
+# api.add_resource(SetDecisions, '/setdecisions')  # '/setdecisions is used to update user scores per name list
 
 if __name__ == "__main__":
     app.run(debug=True)
