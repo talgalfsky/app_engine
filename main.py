@@ -152,17 +152,17 @@ class GetRecommendations(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('user_id', required=True, help="user_id cannot be blank!")
         parser.add_argument('baby_id', required=True, help="baby_id cannot be blank!")
-        parser.add_argument('num', required=False, help="Set num to get a number of names up to 100")
+#         parser.add_argument('num', required=False, help="Set num to get a number of names up to 100")
 
         args = parser.parse_args()
         user_id = args['user_id']
         baby_id = args['baby_id']
-        num = args['num']
+#         num = args['num']
         
-        if num == None:
-            num = 50
-        if num > 100:
-            num = 100
+#         if num == None:
+#             num = 50
+#         if num > 100:
+#             num = 100
         
         query = f"""
             WITH past_decisions AS(
@@ -182,13 +182,13 @@ class GetRecommendations(Resource):
             WHERE name_lower NOT IN (SELECT name FROM past_decisions)
             AND sex = (select distinct baby_sex FROM past_decisions)
             ORDER BY RAND()
-            LIMIT {num}                
+            LIMIT 10                
         """
         query_res = client.query(query)
         
         parser.remove_argument('user_id')
         parser.remove_argument('baby_id')
-        parser.remove_argument('num')
+#         parser.remove_argument('num')
         
         results = {} #empty dic
         counter = 0
